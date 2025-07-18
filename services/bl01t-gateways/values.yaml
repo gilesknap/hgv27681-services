@@ -9,3 +9,5 @@ pvaAddrList: 172.23.255.255
 
 caServerPort: 9064
 pvaServerPort: 9065
+
+hostNetwork: false
