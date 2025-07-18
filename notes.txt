@@ -105,3 +105,6 @@ $ git remote add origin git@github.com:gilesknap/hgv27681-services.git          
 hgv27681@pc0116: /scratch/hgv27681/work/tutorial-cluster/hgv27681-services main
 $ git push -u origin main
 
+module load ec/p47
+export EC_TARGET=hgv27681/hgv27681
+ec ps
