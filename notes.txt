@@ -67,7 +67,7 @@ This template will create a new repository which describes the set of IOCs and s
 🎤 Kubernetes namespace in which the IOCs and services will run.
 
    At DLS this should be "{beamline shortname}-beamline" or "accelerator".
-   hgv27681-beamline
+   hgv27681
 🎤 Git platform hosting this repository.
    github.com
 🎤 The GitHub organisation that will contain this repo.
