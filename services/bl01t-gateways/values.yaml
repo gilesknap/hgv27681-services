@@ -1,0 +1,11 @@
+image: ghcr.io/epics-containers/gateways-developer:2024.12.3
+
+# nodeName: this can run anywhere
+overrideConfig: true
+
+# broadcast on controls dev network
+caAddrList: 172.23.255.255
+pvaAddrList: 172.23.255.255
+
+caServerPort: 9064
+pvaServerPort: 9065
