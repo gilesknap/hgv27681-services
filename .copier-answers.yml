@@ -1,0 +1,14 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: 4.4.2
+_src_path: https://github.com/epics-containers/services-template-helm
+athena_services: []
+cluster_name: argus
+cluster_namespace: hgv27681
+cluster_type: dls_cluster
+description: hgv27681 IOC Instances and Services
+git_platform: github.com
+github_org: gilesknap
+ioc_group: hgv27681
+location: hgv27681
+logging_url: https://graylog2.diamond.ac.uk/search?rangetype=relative&fields=message%2Csource&width=1489&highlightMessage=&relative=172800&q=pod_name%3A{service_name}*
+repo_uri: https://github.com/gilesknap/hgv27681-services
