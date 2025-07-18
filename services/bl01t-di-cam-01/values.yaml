@@ -3,6 +3,9 @@
 ioc-instance:
   image: ghcr.io/epics-containers/ioc-adsimdetector-runtime:2025.7.1b1
 
+  startCommand: stdio-expose
+  startArgs: /epics/ioc/start.sh
+
   # Debugging values ##########################################################
   # image: ghcr.io/epics-containers/ioc-IOC_NAME-developer:VERSION
 
