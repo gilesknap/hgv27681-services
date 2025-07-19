@@ -8,7 +8,7 @@
 if [[ ${HOST_NETWORK} == "NO" ]]; then
   # IP lists for IOCS (blank if get_ioc_ips.py fails)
   echo "finding IOCs running in this namespace"
-  export IPS="$(python3 /config/get_ioc_ips.py --dns-names)"
+  export IPS="$(python3 /config/get_ioc_ips.py)"
   export EPICS_CA_ADDR_LIST="${IPS:-127.0.0.1}"
   echo "EPICS_CA_ADDR_LIST set to: ${EPICS_CA_ADDR_LIST}"
 fi
