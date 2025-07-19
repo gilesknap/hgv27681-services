@@ -15,8 +15,13 @@ spec:
       labels:
         app: {{ .Release.Name }}
     spec:
-      # must be commented out for network host
-      # serviceAccountName: default-full-access-mounted
+      # When running inside the container network, we need full access service
+      # account to query the namespace for IOCs to add to EPICS_CA_ADDR_LIST
+      {{- if .Values.hostNetwork }}
+      serviceAccountName: default-full-access-mounted
+      {{- end }}
+      # if overrideConfig is set, mount the config map over the default
+      # config files supplied inside the container image
       {{- if .Values.overrideConfig }}
       volumes:
         - name: config-volume

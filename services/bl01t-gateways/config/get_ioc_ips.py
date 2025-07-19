@@ -28,7 +28,6 @@ def get_ioc_ips(v1: client.CoreV1Api):
     for pod in ret.items:
         if "is_ioc" in pod.metadata.labels:
             ips.add(pod.status.pod_ip)
-
     return ips
 
 
