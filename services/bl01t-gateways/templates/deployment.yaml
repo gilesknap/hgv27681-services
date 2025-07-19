@@ -34,7 +34,7 @@ spec:
             # this controls wether the gateway will use ADDR_LIST of internal
             # addresses, or use the ADDR_LIST below
             - name: HOST_NETWORK
-              value: {{ ternary "YES" "NO" .Values.hostNetwork }}
+              value: {{ ternary "YES" "NO" .Values.hostNetwork | quote}}
             - name: EPICS_CA_AUTO_ADDR_LIST
               value: "NO"
             - name: EPICS_CA_ADDR_LIST
@@ -65,7 +65,7 @@ spec:
            - "/config/start-pva.sh"
           env:
             - name: HOST_NETWORK
-              value: {{ ternary "YES" "NO" .Values.hostNetwork }}
+              value: {{ ternary "YES" "NO" .Values.hostNetwork | quote }}
             - name: EPICS_PVA_AUTO_ADDR_LIST
               value: "NO"
             - name: EPICS_PVA_ADDR_LIST
