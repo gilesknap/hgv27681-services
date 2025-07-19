@@ -5,40 +5,62 @@ Prints a list of cluster IPs of IOCs running in the current namespace.
 """
 
 import argparse
+import os
 
 from kubernetes import client, config
 
 
-def get_ioc_ips(v1: client.CoreV1Api):
-    """Get the list cluster IPs of IOCs running in a namespace
+def get_ioc_addrs(
+    v1: client.CoreV1Api, namespace: str | None = None, dns_names: bool = False
+) -> set:
+    """Output a list cluster addresses of IOCs running in a namespace
 
     Args:
         v1: kubernetes client
         namespace: namespace to get the IOCs from
     """
-    ips = set()
+    addrs = set()
 
-    # get the current namespace
-    ns_path = "/var/run/secrets/kubernetes.io/serviceaccount/namespace"
-    with open(ns_path) as f:
-        current_namespace = f.read().strip()
+    # choose the namespace to search for IOCs in
+    if namespace is not None:
+        ioc_namespace = namespace
+    else:
+        ns_path = "/var/run/secrets/kubernetes.io/serviceaccount/namespace"
+        with open(ns_path) as f:
+            ioc_namespace = f.read().strip()
 
     # get the pods in the namespace
-    ret = v1.list_namespaced_pod(current_namespace)
-    for pod in ret.items:
-        if "is_ioc" in pod.metadata.labels:
-            ips.add(pod.status.pod_ip)
-    return ips
+    if dns_names:
+        # if we want DNS names, we need to get the service names
+        ret = v1.list_namespaced_service(ioc_namespace)
+        for pod in ret.items:
+            if "is_ioc" in pod.metadata.labels:
+                # use the service name as the DNS name
+                addrs.add(pod.metadata.name)
+    else:
+        ret = v1.list_namespaced_pod(ioc_namespace)
+        for pod in ret.items:
+            if "is_ioc" in pod.metadata.labels:
+                addrs.add(pod.status.pod_ip)
+    return addrs
 
 
 def main():
     args = parse_args()
 
     # configure K8S and make a Core API client
-    config.load_incluster_config()
+    try:
+        config.load_incluster_config()
+        in_cluster = True
+    except config.ConfigException:
+        config.load_kube_config(config_file=os.getenv("KUBECONFIG", "~/.kube/config"))
+        in_cluster = False
     v1 = client.CoreV1Api()
 
-    ips = get_ioc_ips(v1)
+    if not in_cluster and args.namespace is None:
+        raise ValueError("--namespace must be specified when not running in-cluster")
+
+    ips = get_ioc_addrs(v1, args.namespace, args.dns_names)
     ip_str = args.sep.join(ips)
 
     print(ip_str)
@@ -46,7 +68,21 @@ def main():
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--sep", type=str, default=" ")
+    parser.add_argument(
+        "--sep",
+        type=str,
+        default=" ",
+        help="Separator for the outputed list of addresses",
+    )
+    parser.add_argument(
+        "--namespace", type=str, default=None, help="Namespace to get the IOCs from"
+    )
+    parser.add_argument(
+        "--dns-names",
+        action="store_true",
+        default=False,
+        help="Use DNS names instead of IPs",
+    )
     return parser.parse_args()
 
 
