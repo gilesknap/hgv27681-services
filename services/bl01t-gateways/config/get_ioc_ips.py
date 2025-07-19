@@ -5,7 +5,6 @@ Prints a list of cluster IPs of IOCs running in the current namespace.
 """
 
 import argparse
-import os
 
 from kubernetes import client, config
 
@@ -53,7 +52,7 @@ def main():
         config.load_incluster_config()
         in_cluster = True
     except config.ConfigException:
-        config.load_kube_config(config_file=os.getenv("KUBECONFIG", "~/.kube/config"))
+        config.load_kube_config()
         in_cluster = False
     v1 = client.CoreV1Api()
 
