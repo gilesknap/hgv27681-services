@@ -9,8 +9,12 @@ if [[ ${HOST_NETWORK} == "NO" ]]; then
   # IP lists for IOCS (blank if get_ioc_ips.py fails)
   echo "finding IOCs running in this namespace"
   export IPS="$(python3 /config/get_ioc_ips.py --dns-names)"
-  export EPICS_CA_NAME_SERVERS="${IPS:-127.0.0.1}"
-  echo "EPICS_CA_NAME_SERVERS set to: ${EPICS_CA_NAME_SERVERS}"
+  export EPICS_CA_ADDR_LIST="${IPS:-127.0.0.1}"
+  echo "EPICS_CA_ADDR_LIST set to: ${EPICS_CA_ADDR_LIST}"
+fi
+
+if [[ -n ${EPICS_CA_ADDR_LIST} ]]; then
+  cip="-cip"
 fi
 
 # PORTS for CA and PVA
@@ -22,6 +26,6 @@ CA_DEBUG=${CA_DEBUG:-0}
 PVA_DEBUG=${PVA_DEBUG:-0}
 
 # start the CA Gateway
-/epics/ca-gateway/bin/linux-x86_64/gateway -sport ${CA_SERVER_PORT} \
+/epics/ca-gateway/bin/linux-x86_64/gateway -sport ${CA_SERVER_PORT} ${cip} "${EPICS_CA_ADDR_LIST}"\
    -pvlist /config/pvlist -access /config/access \
    -log /dev/stdout -debug ${CA_DEBUG:-0}
