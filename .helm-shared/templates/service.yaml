@@ -1,3 +1,6 @@
+# TODO this should go into ioc-instance chart in ec-helm-charts
+#
+# when not using hostNetwork, create a service to expose the application
 {{- if not .Values.hostNetwork }}
 apiVersion: v1
 kind: Service

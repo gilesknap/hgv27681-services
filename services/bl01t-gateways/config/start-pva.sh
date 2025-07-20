@@ -9,10 +9,10 @@ THIS=$(realpath $(dirname $0))
 
 # IP lists for IOCS (blank if get_ioc_ips.py fails)
 if [[ ${HOST_NETWORK} == "NO" ]]; then
-  export IPS="$(python3 /config/get_ioc_ips.py)"
-  export EPICS_PVA_ADDR_LIST=${IPS:-127.0.0.1}
+  export IPS="$(python3 /config/get_ioc_ips.py --dns-names)"
+  export EPICS_PVA_NAME_SERVERS=${IPS:-127.0.0.1}
 else
-  export EPICS_PVA_ADDR_LIST=${EPICS_PVA_ADDR_LIST:-127.0.0.1}
+  export EPICS_PVA_NAME_SERVERS=${EPICS_PVA_NAME_SERVERS:-127.0.0.1}
 fi
 
 # PORTS for CA and PVA
