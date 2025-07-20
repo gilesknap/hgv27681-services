@@ -1,7 +1,9 @@
 # yaml-language-server: $schema=https://github.com/epics-containers/ec-helm-charts/releases/download/4.1.3/ioc-instance.schema.json
 
-# shared values for all services
+# TODO this will go into ioc-instance once service.yaml is moved there
+baseIp: "10.32.0.0/12"
 
+# shared values for all services
 global:
   ioc_group: hgv27681
   location: hgv27681
@@ -11,3 +13,4 @@ ioc-instance:
   # useHostNetwork - use host network for IOC - required for Channel Access
   # to work outside of the cluster
   hostNetwork: false
+  # ClusterIP CIDR for static IP allocation
