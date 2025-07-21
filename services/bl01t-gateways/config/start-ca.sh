@@ -11,6 +11,7 @@ if [[ ${HOST_NETWORK} == "NO" ]]; then
   export IPS="$(python3 /config/get_ioc_ips.py --dns-names)"
   export EPICS_CA_ADDR_LIST="${IPS:-127.0.0.1}"
   echo "EPICS_CA_ADDR_LIST set to: ${EPICS_CA_ADDR_LIST}"
+  export EPICS_CA_AUTO_ADDR_LIST=NO
 fi
 
 if [[ -n ${EPICS_CA_ADDR_LIST} ]]; then

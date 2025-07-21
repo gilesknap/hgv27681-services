@@ -9,8 +9,10 @@ THIS=$(realpath $(dirname $0))
 
 # IP lists for IOCS (blank if get_ioc_ips.py fails)
 if [[ ${HOST_NETWORK} == "NO" ]]; then
+  echo "finding IOCs running in this namespace"
   export IPS="$(python3 /config/get_ioc_ips.py --dns-names)"
   export EPICS_PVA_NAME_SERVERS=${IPS:-127.0.0.1}
+  echo "EPICS_PVA_NAME_SERVERS set to: ${EPICS_PVA_NAME_SERVERS}"
 else
   export EPICS_PVA_NAME_SERVERS=${EPICS_PVA_NAME_SERVERS:-127.0.0.1}
 fi
