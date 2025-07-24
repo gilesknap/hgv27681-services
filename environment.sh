@@ -9,44 +9,27 @@ if [ "$0" = "$BASH_SOURCE" ]; then
     exit 1
 fi
 
-echo "Loading environment for hgv27681 IOC Instances and Services ..."
+echo "Loading environment for hgv27681 deployment ..."
 
 #### SECTION 1. Environment variables ##########################################
 
-export EC_CLI_BACKEND="K8S"
-# the namespace to use for kubernetes deployments
-export EC_TARGET=hgv27681
+export EC_CLI_BACKEND="ARGOCD"
+# the argocd project and root app
+export EC_TARGET=hgv27681/hgv27681
 # the git repo for this project
 export EC_SERVICES_REPO=https://github.com/gilesknap/hgv27681-services
 # declare your centralised log server Web UI
-export EC_LOG_URL="https://graylog2.diamond.ac.uk/search?rangetype=relative&fields=message%2Csource&width=1489&highlightMessage=&relative=172800&q=pod_name%3A{service_name}*"
+export EC_LOG_URL=''
 
 #### SECTION 2. Install ec #####################################################
 
-# check if epics-containers-cli (ec command) is installed
-if ! ec --version &> /dev/null; then
-    echo "ERROR: Please set up a virtual environment and: 'pip install edge-containers-cli'"
-    return 1
-fi
+module load ec/p47
+export EC_SERVICES_REPO=https://github.com/gilesknap/hgv27681-services
+export EC_TARGET=hgv27681/hgv27681
 
-# enable shell completion for ec commands
-source <(ec --show-completion ${SHELL})
-
-
-#### SECTION 3. Configure Kubernetes Cluster ###################################
-
-
-# the following configures kubernetes inside DLS.
-
-module unload argus > /dev/null
-module load argus > /dev/null
-# set the default namespace for kubectl and helm (for convenience only)
-kubectl config set-context --current --namespace=hgv27681
-# make sure the user has provided credentials
-kubectl version
-
+#### SECTION 3. Configure Argocd Server ###################################
 
 # enable shell completion for k8s tools
 if [ -n "$ZSH_VERSION" ]; then SHELL=zsh; fi
-source <(helm completion $(basename ${SHELL}))
-source <(kubectl completion $(basename ${SHELL}))
+source <(argocd completion $(basename ${SHELL}))
+
