@@ -14,28 +14,28 @@ spec:
   ports:
     # CA and PVA ports, always map to default targets IOCs will always use.
     - name: ca-server-tcp
-      port: {{ .Values.caServerPort | default 9064 }}
-      targetPort: 5064
+      port: {{ .Values.caServerPort }}
+      targetPort: {{ .Values.caServerPort }}
       protocol: TCP
     - name: ca-server-udp
-      port: {{ .Values.caServerPort | default 9064 }}
-      targetPort: 5064
+      port: {{ .Values.caServerPort }}
+      targetPort: {{ .Values.caServerPort }}
       protocol: UDP
     - name: ca-repeater-tcp
-      port: {{ add1 (.Values.caServerPort | default 9064) }}
-      targetPort: 5065
+      port: {{ add1 (.Values.caServerPort) }}
+      targetPort: {{ add1 (.Values.caServerPort) }}
       protocol: TCP
     - name: ca-repeater-udp
-      port: {{ add1 (.Values.caServerPort | default 9064) }}
-      targetPort: 5065
+      port: {{ add1 (.Values.caServerPort) }}
+      targetPort: {{ add1 (.Values.caServerPort) }}
       protocol: UDP
     - name: pva-server-tcp
-      port: {{ .Values.pvaServerPort | default 5075 }}
-      targetPort: 5075
+      port: {{ .Values.pvaServerPort }}
+      targetPort: {{ .Values.pvaServerPort }}
       protocol: TCP
     - name: pva-server-udp
-      port: {{ add1 (.Values.pvaServerPort | default 5075) }}
-      targetPort: 5076
+      port: {{ add1 (.Values.pvaServerPort) }}
+      targetPort: {{ add1 (.Values.pvaServerPort) }}
       protocol: UDP
   selector:
     app: {{ .Release.Name }}
