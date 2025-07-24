@@ -23,7 +23,11 @@ export EC_LOG_URL=''
 
 #### SECTION 2. Install ec #####################################################
 
-module load ec/p47
+if not module load ec/p47 2>/dev/null; then
+    # when not at DLS we won't have the module system available
+    # you will need edge-containers-cli installed in a venv and this:
+    alias ec-login='argocd login argocd.diamond.ac.uk --grpc-web --sso'
+fi
 export EC_SERVICES_REPO=https://github.com/gilesknap/hgv27681-services
 export EC_TARGET=hgv27681/hgv27681
 
