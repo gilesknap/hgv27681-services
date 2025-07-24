@@ -393,7 +393,7 @@
       <name>OpenDisplay</name>
       <actions>
         <action type="open_display">
-          <file>auto-generated/bl01t-di-cam-01/index.bob</file>
+          <file>http://172.23.169.1/bl01t-di-cam-01/index.bob</file>
           <macros>
             <P>BL01T-EA-TST-01</P>
             <R>:DET:</R>
@@ -420,7 +420,7 @@
       <name>OpenDisplay_1</name>
       <actions>
         <action type="open_display">
-          <file>auto-generated/bl01t-mo-sim-01/index.bob</file>
+          <file>http://172.23.169.1/bl01t-mo-sim-01/index.bob</file>
           <macros>
             <P>BL01T-EA-TST-01</P>
             <R>:PVA:</R>
