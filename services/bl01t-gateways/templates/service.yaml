@@ -8,12 +8,34 @@ metadata:
     app: {{ .Release.Name }}
 spec:
   type: LoadBalancer
+  # allocate a fixed clusterIP for this service based on the service name
+  {{- $alloc_args := dict "name" .Release.Name "namespace" .Release.Namespace "baseIp" .Values.baseIp "startIp" .Values.startIp }}
+  clusterIP: {{ include "allocateIpFromName" $alloc_args }}
   ports:
-    - name: pvacess
-      port: 9065
+    # CA and PVA ports, always map to default targets IOCs will always use.
+    - name: ca-server-tcp
+      port: {{ .Values.caServerPort | default 9064 }}
+      targetPort: 5064
       protocol: TCP
-    - name: channel-access
-      port: 9064
+    - name: ca-server-udp
+      port: {{ .Values.caServerPort | default 9064 }}
+      targetPort: 5064
+      protocol: UDP
+    - name: ca-repeater-tcp
+      port: {{ add1 (.Values.caServerPort | default 9064) }}
+      targetPort: 5065
       protocol: TCP
+    - name: ca-repeater-udp
+      port: {{ add1 (.Values.caServerPort | default 9064) }}
+      targetPort: 5065
+      protocol: UDP
+    - name: pva-server-tcp
+      port: {{ .Values.pvaServerPort | default 5075 }}
+      targetPort: 5075
+      protocol: TCP
+    - name: pva-server-udp
+      port: {{ add1 (.Values.pvaServerPort | default 5075) }}
+      targetPort: 5076
+      protocol: UDP
   selector:
     app: {{ .Release.Name }}

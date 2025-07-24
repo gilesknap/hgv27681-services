@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-Prints a list of cluster IPs of IOCs running in the current namespace.
+Prints a list of cluster IPs or DNS names of IOCs running in the current namespace.
 """
 
 import argparse
