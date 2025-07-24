@@ -9,11 +9,17 @@ else
   BROADCAST=""
 fi
 
+if [[ ${EPICS_PVA_AUTO_ADDR_LIST} == "YES" ]]; then
+  auto_addr_list=True
+else
+  auto_addr_list=False
+fi
+
 # fix up the templated pva gateway config
 set -x
 cat ${THIS}/pvagw.template |
   sed \
-    -e "s/EPICS_PVA_ADDR_LIST/${EPICS_PVA_ADDR_LIST}/" \
+    -e "s/auto_addr_list/${auto_addr_list}/" \
     -e "s/PVA_SERVER_PORT/${PVA_SERVER_PORT}/" \
     -e "s/EPICS_PVA_AUTO_ADDR_LIST/${EPICS_PVA_AUTO_ADDR_LIST}/" \
     -e "s/BROADCAST/${BROADCAST}/" \
