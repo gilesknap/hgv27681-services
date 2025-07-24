@@ -16,7 +16,7 @@ cat ${THIS}/pvagw.template |
     -e "s/EPICS_PVA_ADDR_LIST/${EPICS_PVA_ADDR_LIST}/" \
     -e "s/PVA_SERVER_PORT/${PVA_SERVER_PORT}/" \
     -e "s/EPICS_PVA_AUTO_ADDR_LIST/${EPICS_PVA_AUTO_ADDR_LIST}/" \
-    -e "s/BROADCAST/${EPICS_PVA_AUTO_ADDR_LIST}/" \
+    -e "s/BROADCAST/${BROADCAST}/" \
     > /tmp/pvagw.config
 
 # background the PVA Gateway
