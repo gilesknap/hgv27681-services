@@ -10,9 +10,9 @@ else
 fi
 
 if [[ ${EPICS_PVA_AUTO_ADDR_LIST} == "YES" ]]; then
-  auto_addr_list=True
+  auto_addr_list=true
 else
-  auto_addr_list=False
+  auto_addr_list=false
 fi
 
 # fix up the templated pva gateway config
@@ -22,6 +22,7 @@ cat ${THIS}/pvagw.template |
     -e "s/auto_addr_list/${auto_addr_list}/" \
     -e "s/PVA_SERVER_PORT/${PVA_SERVER_PORT}/" \
     -e "s/EPICS_PVA_AUTO_ADDR_LIST/${EPICS_PVA_AUTO_ADDR_LIST}/" \
+    -e "s/EPICS_PVA_ADDR_LIST/${EPICS_PVA_ADDR_LIST}/" \
     -e "s/BROADCAST/${BROADCAST}/" \
     > /tmp/pvagw.config
 
