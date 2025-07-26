@@ -1,8 +1,11 @@
 # yaml-language-server: $schema=https://github.com/epics-containers/ec-helm-charts/releases/download/4.1.3/ioc-instance.schema.json
 
 # TODO this will go into ioc-instance once service.yaml is moved there
-# Argus CIDR for static IP allocation
+# Argus CIDR for static IP allocation NOTE - this is the same for all cluster
+# so make it the default in the ioc-instance chart
 baseIp: "10.96.0.0/12"
+# override the auto-generated ClusterIP for the ioc-instance service
+clusterIp:
 
 # shared values for all services
 global:

@@ -15,8 +15,12 @@ spec:
   selector:
     app: {{ .Release.Name }}
   type: ClusterIP
+  {{- with .Values.clusterIp }}
+  clusterIP: {{ . }}
+  {{- else }}
   {{- $alloc_args := dict "name" .Release.Name "namespace" .Release.Namespace "baseIp" .Values.baseIp "startIp" .Values.startIp }}
   clusterIP: {{ include "allocateIpFromName" $alloc_args }}
+  {{- end }}
   ports:
     - name: ca-server-tcp
       port: {{ .Values.ca_server_port | default 5064 }}
