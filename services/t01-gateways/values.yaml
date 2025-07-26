@@ -2,4 +2,4 @@ epics-gateways:
   # hgv27681 personal namespace cannot use hostNetwork
   hostNetwork: false
 
-  image: ghcr.io/epics-containers/epics-gateways-runtime:2025.7.4b1
+  image: ghcr.io/epics-containers/epics-gateways-runtime:2025.7.4
