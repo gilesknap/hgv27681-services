@@ -9,4 +9,3 @@ global:
 ioc-instance:
   # personal namespaces are not authorized to use hostNetwork=true
   hostNetwork: false
-  baseIp: "10.96.0.0/12"
